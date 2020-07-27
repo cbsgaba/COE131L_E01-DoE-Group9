@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'updatingdb.ui'
+# Form implementation generated from reading ui file 'updatingdbq.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.0
 #
@@ -10,14 +10,14 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
-import studentinfo
+import questionbank
 import sys
 
-class Ui_updatedb(object):
-    def setupUi(self, updatedb):
-        updatedb.setObjectName("updatedb")
-        updatedb.resize(315, 97)
-        self.centralwidget = QtWidgets.QWidget(updatedb)
+class Ui_updatedbq(object):
+    def setupUi(self, updatedbq):
+        updatedbq.setObjectName("updatedbq")
+        updatedbq.resize(315, 97)
+        self.centralwidget = QtWidgets.QWidget(updatedbq)
         self.centralwidget.setObjectName("centralwidget")
         self.ok_button = QtWidgets.QPushButton(self.centralwidget)
         self.ok_button.setGeometry(QtCore.QRect(110, 60, 93, 28))
@@ -25,41 +25,33 @@ class Ui_updatedb(object):
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(90, 20, 151, 16))
         self.label.setObjectName("label")
-        updatedb.setCentralWidget(self.centralwidget)
+        updatedbq.setCentralWidget(self.centralwidget)
+        self.ok_button.clicked.connect(self.showquestionbank)
+        self.ok_button.clicked.connect(updatedbq.close)
         try:
             con = sqlite3.connect("userlist.db",timeout=10)
             cur = con.cursor()
-            cur.execute('SELECT * from users WHERE ID =2')
+            cur.execute('SELECT * from questionbank WHERE ID =2')
             one = cur.fetchall()
             con.commit()
             for row in one:
-                modify = row[5]
+                modify = row[3]
             print(modify)
-            cur.execute('SELECT * from users WHERE ID =?',(modify,))
+            cur.execute('SELECT * from questionbank WHERE ID =?',(modify,))
             data2 = cur.fetchall()
             for row in data2:
-                usertype = row[1]
-                name = row[2]
-                username1 = row[3]
-                password1 = row[4]
-            cur.execute('UPDATE users SET TYPE=?,NAME=?,USERNAME=?,PASSWORD=? WHERE ID=?',(usertype,name,username1,password1,modify))
+                question = row[1]
+                answer = row[2]
+            cur.execute('UPDATE questionbank SET QUESTION=?, ANSWER=? WHERE ID=?',(question,answer,modify,))
             con.commit()
             con.close()
         except Exception:
             self.showMessageBox('Database Error','Could not access the database')
 
-        self.ok_button.clicked.connect(self.showstudentinfo)
-        self.ok_button.clicked.connect(updatedb.close)
-        self.retranslateUi(updatedb)
-        QtCore.QMetaObject.connectSlotsByName(updatedb)
+        self.retranslateUi(updatedbq)
+        QtCore.QMetaObject.connectSlotsByName(updatedbq)
 
 
-    def showstudentinfo(self):
-        self.studentinfoWindow = QtWidgets.QMainWindow()
-        self.ui = studentinfo.Ui_MainWindow()
-        self.ui.setupUi(self.studentinfoWindow)
-        self.studentinfoWindow.show()
-    
     def showMessageBox(self,title,message):
         msgBox = QtWidgets.QMessageBox()
         msgBox.setIcon(QtWidgets.QMessageBox.Warning)
@@ -68,17 +60,23 @@ class Ui_updatedb(object):
         msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
         msgBox.exec_()
 
-    def retranslateUi(self, updatedb):
+    def showquestionbank(self):
+        self.questionbankwindow = QtWidgets.QMainWindow()
+        self.ui = questionbank.Ui_Question_bank()
+        self.ui.setupUi(self.questionbankwindow)
+        self.questionbankwindow.show()   
+
+    def retranslateUi(self, updatedbq):
         _translate = QtCore.QCoreApplication.translate
-        updatedb.setWindowTitle(_translate("updatedb", "Database"))
-        self.ok_button.setText(_translate("updatedb", "Ok"))
-        self.label.setText(_translate("updatedb", "Updating the Database..."))
+        updatedbq.setWindowTitle(_translate("updatedbq", "Database"))
+        self.ok_button.setText(_translate("updatedbq", "Ok"))
+        self.label.setText(_translate("updatedbq", "Updating the Database..."))
 
 
 if __name__ == "__main__":
         app = QtWidgets.QApplication(sys.argv)
         updatedb = QtWidgets.QMainWindow()
-        ui = Ui_updatedb()
+        ui = Ui_updatedbq()
         ui.setupUi(updatedb)
         updatedb.show()
         sys.exit(app.exec_())

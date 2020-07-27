@@ -32,6 +32,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.update_student_button = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.update_student_button.setObjectName("update_student_button")
+        #################\
+        self.update_student_button.hide()
+        ######
         self.verticalLayout_2.addWidget(self.update_student_button)
         self.add_student_button = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.add_student_button.setObjectName("add_student_button")
@@ -45,10 +48,17 @@ class Ui_MainWindow(object):
         self.tableWidget = QtWidgets.QTableWidget(self.student_list_groupbox)
         self.tableWidget.setGeometry(QtCore.QRect(10, 30, 271, 261))
         self.tableWidget.setObjectName("tableWidget")
+        ##################################################3
+        self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.setColumnCount(3)
+        ########################################################################
+
+      #  self.tableWidget.horizontalHeader().setVisible(False)
+        self.tableWidget.setColumnHidden(0,True)
+        ###########################################################################
         self.tableWidget.setRowCount(0)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, item)
+       # item = QtWidgets.QTableWidgetItem()
+        #self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
@@ -66,47 +76,53 @@ class Ui_MainWindow(object):
         self.canel_students_button.setObjectName("canel_students_button")
         self.horizontalLayout.addWidget(self.canel_students_button)
         MainWindow.setCentralWidget(self.centralwidget)
+
         try:
             con = sqlite3.connect("userlist.db")
             cur = con.cursor()
             query = "SELECT ID,USERNAME,NAME FROM users WHERE TYPE='student' AND ID!=1 AND ID!=2"
             result = cur.execute(query)
             self.tableWidget.setRowCount(0)
+
             for row_number, row_data in enumerate(result):
                 self.tableWidget.insertRow(row_number)
                 for column_number, data in enumerate(row_data):
                     self.tableWidget.setItem(row_number, column_number,QtWidgets.QTableWidgetItem(str(data)))
             con.close
+
         except Exception:
             self.showMessageBox('Error',('Could not load the database'))
-        self.retranslateUi(MainWindow)
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         ################################################################
         self.canel_students_button.clicked.connect(self.showadminMain)
         self.canel_students_button.clicked.connect(MainWindow.close)
         ################################################################
         self.add_student_button.clicked.connect(self.addStudent)
-        self.update_student_button.clicked.connect(self.tableWidget.clear)
-        self.update_student_button.clicked.connect(self.loaddata)
+        self.add_student_button.clicked.connect(MainWindow.close)
+        # self.update_student_button.clicked.connect(self.tableWidget.clear)
+        # self.update_student_button.clicked.connect(self.loaddata)
         self.delete_student_button.clicked.connect(self.deletestudent)
         self.modify_student_button.clicked.connect(self.modifystudent)
-
+        self.retranslateUi(MainWindow)
         ################################################################
 
-    def loaddata(self):
-        try:
-            con = sqlite3.connect("userlist.db")
-            cur = con.cursor()
-            query = "SELECT ID,USERNAME,NAME FROM users WHERE TYPE='student' AND ID!=1 AND ID!=2"
-            result = cur.execute(query)
-            self.tableWidget.setRowCount(0)
-            for row_number, row_data in enumerate(result):
-                self.tableWidget.insertRow(row_number)
-                for column_number, data in enumerate(row_data):
-                    self.tableWidget.setItem(row_number, column_number,QtWidgets.QTableWidgetItem(str(data)))
-            con.close
-        except Exception:
-            self.showMessageBox('Error',('Could not load the database'))
+    # def loaddata(self):
+    #     try:
+    #         con = sqlite3.connect("userlist.db")
+    #         cur = con.cursor()
+    #         query = "SELECT ID,USERNAME,NAME FROM users WHERE TYPE='student' AND ID!=1 AND ID!=2"
+    #         result = cur.execute(query)
+    #         self.tableWidget.setRowCount(0)
+
+    #         for row_number, row_data in enumerate(result):
+    #             self.tableWidget.insertRow(row_number)
+    #             for column_number, data in enumerate(row_data):
+    #                 self.tableWidget.setItem(row_number, column_number,QtWidgets.QTableWidgetItem(str(data)))
+
+    #         con.close
+    #     except Exception:
+    #         self.showMessageBox('Error',('Could not load the database'))
 
     def addStudent(self):
         self.addstudentWindow = QtWidgets.QMainWindow()
@@ -182,8 +198,8 @@ class Ui_MainWindow(object):
         self.add_student_button.setText(_translate("MainWindow", "Add"))
         self.modify_student_button.setText(_translate("MainWindow", "Modify"))
         self.delete_student_button.setText(_translate("MainWindow", "Delete"))
-        item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "ID"))
+        #item = self.tableWidget.horizontalHeaderItem(0)
+        #item.setText(_translate("MainWindow", "ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "USERNAME"))
         item = self.tableWidget.horizontalHeaderItem(2)

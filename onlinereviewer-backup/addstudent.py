@@ -11,6 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import sqlite3
+import studentlist
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -61,6 +62,8 @@ class Ui_MainWindow(object):
         ################################################################
         self.pushButton.clicked.connect(self.addstudent)
         self.pushButton.clicked.connect(MainWindow.close)
+        self.pushButton.clicked.connect(self.showstudentlist)
+        self.pushButton_2.clicked.connect(self.showstudentlist)
     
     def addstudent(self):
         usertype='student'
@@ -94,6 +97,12 @@ class Ui_MainWindow(object):
         msgBox.setText(message)
         msgBox.setStandardButtons(QtWidgets.QMessageBox.Ok)
         msgBox.exec_()
+
+    def showstudentlist(self):
+        self.studentlistwindow = QtWidgets.QMainWindow()
+        self.ui = studentlist.Ui_MainWindow()
+        self.ui.setupUi(self.studentlistwindow)
+        self.studentlistwindow.show()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

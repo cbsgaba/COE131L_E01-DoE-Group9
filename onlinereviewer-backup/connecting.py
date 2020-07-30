@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import sqlite3
 import adminmain
+import studentmain
 
 class Ui_connecting(object):
     def setupUi(self, connecting):
@@ -61,7 +62,8 @@ class Ui_connecting(object):
         self.ui = adminmain.Ui_admin_main()
         self.ui.setupUi(self.adminmainWindow)
         self.adminmainWindow.show()
-        
+
+    
     def showMessageBox(self,title,message):
         msgBox = QtWidgets.QMessageBox()
         msgBox.setIcon(QtWidgets.QMessageBox.Warning)

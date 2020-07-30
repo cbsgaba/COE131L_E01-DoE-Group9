@@ -16,16 +16,18 @@ import sys
 import signup
 import adminmain
 import connecting
+import studentmain
 
 
 
 class Ui_LOGINPAGE(object):
     def setupUi(self, LOGINPAGE):
         LOGINPAGE.setObjectName("LOGINPAGE")
-        LOGINPAGE.resize(367, 272)
-        LOGINPAGE.setMinimumSize(QtCore.QSize(367, 272))
-        LOGINPAGE.setMaximumSize(QtCore.QSize(367, 272))
+        LOGINPAGE.resize(748, 272)
+        LOGINPAGE.setAutoFillBackground(True)
+        LOGINPAGE.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(LOGINPAGE)
+        self.centralwidget.setAutoFillBackground(False)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(90, 170, 194, 80))
@@ -35,17 +37,9 @@ class Ui_LOGINPAGE(object):
         self.Buttons.setObjectName("Buttons")
         self.login_button = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.login_button.setObjectName("login_button")
-        ############################################################
-        self.login_button.clicked.connect(self.login)
-        self.login_button.clicked.connect(LOGINPAGE.close)
-        ############################################################
         self.Buttons.addWidget(self.login_button)
         self.signup_button = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.signup_button.setObjectName("signup_button")
-        #############################################################
-        self.signup_button.clicked.connect(self.signUpShow)
-        self.signup_button.clicked.connect(LOGINPAGE.close)
-        ############################################################
         self.Buttons.addWidget(self.signup_button)
         self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(130, 60, 191, 111))
@@ -58,9 +52,6 @@ class Ui_LOGINPAGE(object):
         self.verticalLayout_2.addWidget(self.userline)
         self.passline = QtWidgets.QLineEdit(self.verticalLayoutWidget)
         self.passline.setObjectName("passline")
-        #########################################################
-        self.passline.setEchoMode(QtWidgets.QLineEdit.Password)
-        ##########################################################
         self.verticalLayout_2.addWidget(self.passline)
         self.username_label = QtWidgets.QLabel(self.centralwidget)
         self.username_label.setGeometry(QtCore.QRect(50, 80, 71, 20))
@@ -71,15 +62,91 @@ class Ui_LOGINPAGE(object):
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(120, 30, 111, 16))
         self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(380, 20, 281, 71))
+        self.label_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setMidLineWidth(1)
+        self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(400, 50, 261, 71))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.label_3.setFont(font)
+        self.label_3.setObjectName("label_3")
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_4.setGeometry(QtCore.QRect(380, 80, 291, 71))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.label_4.setFont(font)
+        self.label_4.setObjectName("label_4")
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        self.label_5.setGeometry(QtCore.QRect(380, 110, 311, 71))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName("label_5")
+        self.label_6 = QtWidgets.QLabel(self.centralwidget)
+        self.label_6.setGeometry(QtCore.QRect(380, 140, 341, 71))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.label_6.setFont(font)
+        self.label_6.setObjectName("label_6")
+        self.label_7 = QtWidgets.QLabel(self.centralwidget)
+        self.label_7.setGeometry(QtCore.QRect(380, 170, 341, 71))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.label_7.setFont(font)
+        self.label_7.setObjectName("label_7")
         LOGINPAGE.setCentralWidget(self.centralwidget)
+        #########################################################
+        self.passline.setEchoMode(QtWidgets.QLineEdit.Password)
+        ##########################################################
+        #############################################################
+        self.signup_button.clicked.connect(self.signUpShow)
+        self.signup_button.clicked.connect(LOGINPAGE.close)
+        ############################################################
+        ############################################################
+        self.login_button.clicked.connect(self.login)
+        self.login_button.clicked.connect(LOGINPAGE.close)
+        ############################################################
+
         self.retranslateUi(LOGINPAGE)
         QtCore.QMetaObject.connectSlotsByName(LOGINPAGE)
         
 
 
+
     def login(self):
         username = self.userline.text()
         password = self.passline.text()
+        
         usertype=''
         name=''
         admin='admin'
@@ -93,13 +160,14 @@ class Ui_LOGINPAGE(object):
             data = cur.fetchall()
             con.commit()
             for row in data:
+                idq = row[0]
                 usertype = row[1]
                 name = row[2]
                 username = row[3]
                 password = row[4]
-            cur.execute('UPDATE users SET TYPE=?,NAME=?,USERNAME=?,PASSWORD=? WHERE ID=1',(usertype,name,username,password))
+            cur.execute('UPDATE users SET TYPE=?,NAME=?,USERNAME=?,PASSWORD=?,MODIFY=? WHERE ID=1',(usertype,name,username,password,idq))
             con.commit()
-            con.close()
+
 
             if data != None:
                 if admin==row[1]:
@@ -107,17 +175,28 @@ class Ui_LOGINPAGE(object):
                     self.connectingShow()
                 elif student==row[1]:
                     self.showMessageBox('Success', 'Student user logged in')
-                    self.connectingShow()
+                    cur.execute('UPDATE users SET TYPE=?,NAME=?,USERNAME=?,PASSWORD=?,MODIFY=? WHERE ID=5',(usertype,name,username,password,idq))
+                    con.commit()
+                    self.studentmainShow()
                 elif username=='' and password =='':
                     self.showMessageBox('Error', 'Enter some values!')
                     self.loginpageShow()
                 else:
                     self.showMessageBox('Warning', 'Invalid Username and Password')
                     self.loginpageShow()
-
+            
+            con.close()        
         except Exception:
             self.showMessageBox('Database Error','Could not access the database')
 
+    #start#
+    def studentmainShow(self):
+        self.studentmainWindow = QtWidgets.QMainWindow()
+        self.ui = studentmain.Ui_student_main()
+        self.ui.setupUi(self.studentmainWindow)
+        self.studentmainWindow.show()
+   
+   
     def connectingShow(self):
         self.connectingWindow = QtWidgets.QMainWindow()
         self.ui = connecting.Ui_connecting()
@@ -163,6 +242,13 @@ class Ui_LOGINPAGE(object):
         self.username_label.setText(_translate("LOGINPAGE", "Username:"))
         self.password_label.setText(_translate("LOGINPAGE", "Password:"))
         self.label.setText(_translate("LOGINPAGE", "ONLINE REVIEWER"))
+        self.label_2.setText(_translate("LOGINPAGE", "COE131L _E01 _4Q1920"))
+        self.label_3.setText(_translate("LOGINPAGE", "GROUP 9 MEMBERS"))
+        self.label_4.setText(_translate("LOGINPAGE", "CANLAS, MELSON ZIOLO"))
+        self.label_5.setText(_translate("LOGINPAGE", "FERRER, DIDRIC KRISTEN"))
+        self.label_6.setText(_translate("LOGINPAGE", "GABA, CHRISTIAN BENEDICT"))
+        self.label_7.setText(_translate("LOGINPAGE", "VENERACION, CLARK"))
+        
 
 
 if __name__ == "__main__":

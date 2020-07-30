@@ -38,21 +38,6 @@
     <property name="title">
      <string>Question Bank</string>
     </property>
-    <widget class="QListWidget" name="question_list">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>231</width>
-       <height>291</height>
-      </rect>
-     </property>
-     <item>
-      <property name="text">
-       <string>question1</string>
-      </property>
-     </item>
-    </widget>
    </widget>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">

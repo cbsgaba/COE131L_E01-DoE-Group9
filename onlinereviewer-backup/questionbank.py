@@ -14,6 +14,7 @@ import sqlite3
 import addquestion
 import sys
 import modifyquestion
+import adminmain
 
 class Ui_Question_bank(object):
     def setupUi(self, Question_bank):
@@ -95,8 +96,11 @@ class Ui_Question_bank(object):
 
         QtCore.QMetaObject.connectSlotsByName(Question_bank)
         ########################################################################
+        self.save_question_button.clicked.connect(self.showadminMain)
+        self.cancel_question_button.clicked.connect(self.showadminMain)
         self.cancel_question_button.clicked.connect(Question_bank.close)
         self.save_question_button.clicked.connect(Question_bank.close)
+
         self.add_question_button.clicked.connect(self.showaddquestions)
         self.add_question_button.clicked.connect(Question_bank.close)
         self.delete_question_button.clicked.connect(self.deletequestion)
@@ -181,6 +185,11 @@ class Ui_Question_bank(object):
        # except Exception:
             #self.showMessageBox('Error', 'Could not Delete student from the database.')
     
+    def showadminMain(self):
+        self.adminmainWindow = QtWidgets.QMainWindow()
+        self.ui = adminmain.Ui_admin_main()
+        self.ui.setupUi(self.adminmainWindow)
+        self.adminmainWindow.show()
 
     def showMessageBox(self,title,message):
         msgBox = QtWidgets.QMessageBox()

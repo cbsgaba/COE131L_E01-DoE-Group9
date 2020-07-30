@@ -32,7 +32,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.update_student_button = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.update_student_button.setObjectName("update_student_button")
-        #################\
+        #################
         self.update_student_button.hide()
         ######
         self.verticalLayout_2.addWidget(self.update_student_button)
@@ -50,7 +50,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setObjectName("tableWidget")
         ##################################################3
         self.tableWidget.verticalHeader().setVisible(False)
-        self.tableWidget.setColumnCount(3)
+        self.tableWidget.setColumnCount(4)
         ########################################################################
 
       #  self.tableWidget.horizontalHeader().setVisible(False)
@@ -63,6 +63,8 @@ class Ui_MainWindow(object):
         self.tableWidget.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(3, item)
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(40, 330, 451, 41))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
@@ -80,7 +82,7 @@ class Ui_MainWindow(object):
         try:
             con = sqlite3.connect("userlist.db")
             cur = con.cursor()
-            query = "SELECT ID,USERNAME,NAME FROM users WHERE TYPE='student' AND ID!=1 AND ID!=2"
+            query = "SELECT ID,USERNAME,NAME,SCORE FROM users WHERE TYPE='student' AND ID!=1 AND ID!=2 AND ID!=5"
             result = cur.execute(query)
             self.tableWidget.setRowCount(0)
 
@@ -104,7 +106,12 @@ class Ui_MainWindow(object):
         # self.update_student_button.clicked.connect(self.loaddata)
         self.delete_student_button.clicked.connect(self.deletestudent)
         self.modify_student_button.clicked.connect(self.modifystudent)
+        self.modify_student_button.clicked.connect(MainWindow.close)
+        self.save_students_button.clicked.connect(self.showadminMain)
+        self.save_students_button.clicked.connect(MainWindow.close)
+
         self.retranslateUi(MainWindow)
+
         ################################################################
 
     # def loaddata(self):
@@ -157,6 +164,7 @@ class Ui_MainWindow(object):
             con = sqlite3.connect("userlist.db")
             cur = con.cursor()   
             cur.execute("SELECT * FROM USERS WHERE ID=?",(student_id,))
+            #cur.execute("SELECT MODIFY FROM questionbank WHERE ID = 1",(score,))
             data = cur.fetchall()
             con.commit()
             for row in data:
@@ -164,6 +172,7 @@ class Ui_MainWindow(object):
                 name = row[2]
                 username = row[3]
                 password = row[4]
+                #score = 
             cur.execute('UPDATE users SET TYPE=?,NAME=?,USERNAME=?,PASSWORD=?,MODIFY=? WHERE ID=2',(usertype,name,username,password,student_id,))
             con.commit()
             con.close()
@@ -204,6 +213,8 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "USERNAME"))
         item = self.tableWidget.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "NAME"))
+        item = self.tableWidget.horizontalHeaderItem(3)
+        item.setText(_translate("MainWindow", "SCORE"))
         self.save_students_button.setText(_translate("MainWindow", "Save"))
         self.canel_students_button.setText(_translate("MainWindow", "Cancel"))
 

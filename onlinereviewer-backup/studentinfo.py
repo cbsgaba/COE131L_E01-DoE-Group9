@@ -73,8 +73,9 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         ##############################################################################
         self.canel_students_button.clicked.connect(MainWindow.close)
-        #self.canel_students_button.clicked.connect(self.showstudentlist)
+        self.canel_students_button.clicked.connect(self.showstudentlist)
         self.save_students_button.clicked.connect(MainWindow.close)
+        self.save_students_button.clicked.connect(self.showstudentlist)
         ##############################################################################
         self.change_name_button.clicked.connect(self.showmodifyname)
         self.change_name_button.clicked.connect(MainWindow.close)
